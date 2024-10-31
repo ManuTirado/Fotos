@@ -6,20 +6,24 @@
     <title>Botón de Enlace</title>
     <script>
         function openAppOrRedirect() {
-            // Intenta abrir la aplicación usando el deeplink
             const appLink = "kissfm://news";
             const appStoreLink = "https://apps.apple.com/es/app/kiss-fm/id321986916";
 
-            // Crea un iframe oculto para intentar abrir la app
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = appLink;
-            document.body.appendChild(iframe);
+            // Captura la hora actual
+            const startTime = Date.now();
 
-            // Después de un pequeño retraso, redirige a la App Store si la app no está instalada
+            // Intenta abrir el *deeplink* creando una ventana oculta
+            window.location = appLink;
+
+            // Después de un breve retraso, comprueba si se redirige a la App Store
             setTimeout(() => {
-                window.location.href = appStoreLink;
-            }, 1500); // Ajusta el tiempo según tu necesidad
+                const endTime = Date.now();
+                
+                // Si el tiempo transcurrido es breve, significa que no abrió la app
+                if (endTime - startTime < 1500) {
+                    window.location.href = appStoreLink;
+                }
+            }, 1000); // Ajusta el tiempo según sea necesario
         }
     </script>
 </head>
@@ -27,6 +31,6 @@
     <h1>Abre la aplicación</h1>
     <p>Pulsa el botón para abrir el enlace:</p>
 
-    <button onclick="openAppOrRedirect()" style="padding: 10px 20px; font-size: 16px;">Abrir Enlace</button>
+    <button onclick="openAppOrRedirect()" style="padding: 10px 20px; font-size: 16px;">Abrir Enlace 3</button>
 </body>
 </html>
